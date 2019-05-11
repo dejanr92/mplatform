@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import com.dejanroshkovski.mplatform.patients.dto.PatientDTO;
 import com.dejanroshkovski.mplatform.patients.dto.PatientPatchDTO;
+import com.dejanroshkovski.mplatform.patients.dto.PatientResponseDTO;
 import com.dejanroshkovski.mplatform.patients.services.PatientService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,9 @@ public class PatientController{
     PatientService patientService;
 
     @GetMapping(value="/get/{id}", produces="application/json")
-    public ResponseEntity<PatientDTO> getPatientInfo(@PathVariable Integer id) 
+    public ResponseEntity<PatientResponseDTO> getPatientInfo(@PathVariable Integer id) 
     throws Exception{
-        PatientDTO patientDTO = patientService.getPatientById(id);
+        PatientResponseDTO patientDTO = patientService.getPatientById(id);
         return ResponseEntity.ok(patientDTO);
     }
     @PostMapping(value="/store", consumes="application/json", produces="application/json")
@@ -52,9 +53,9 @@ public class PatientController{
         return ResponseEntity.ok(storedPatient);
     }
     @GetMapping(value="/findByName/{inputString}", produces="application/json")
-    public ResponseEntity<List<PatientDTO>> findByFirstOrLastName(@PathVariable String inputString)
+    public ResponseEntity<List<PatientResponseDTO>> findByFirstOrLastName(@PathVariable String inputString)
     throws Exception{
-        List<PatientDTO> foundPatients = patientService.findByFirstOrLastName(inputString);
+        List<PatientResponseDTO> foundPatients = patientService.findByFirstOrLastName(inputString);
         return ResponseEntity.ok(foundPatients);
     } 
 }

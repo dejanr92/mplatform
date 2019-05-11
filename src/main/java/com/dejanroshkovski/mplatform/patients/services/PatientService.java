@@ -6,6 +6,7 @@ import java.util.List;
 import com.dejanroshkovski.mplatform.patients.domain.Patient;
 import com.dejanroshkovski.mplatform.patients.dto.PatientDTO;
 import com.dejanroshkovski.mplatform.patients.dto.PatientPatchDTO;
+import com.dejanroshkovski.mplatform.patients.dto.PatientResponseDTO;
 import com.dejanroshkovski.mplatform.patients.repositories.PatientRepository;
 
 import org.modelmapper.ModelMapper;
@@ -21,9 +22,9 @@ public class PatientService{
     @Autowired
     private ModelMapper modelMapper;
 
-    public PatientDTO getPatientById(Integer id){
+    public PatientResponseDTO getPatientById(Integer id){
         Patient patient = patientRepository.getOne(id);
-        return modelMapper.map(patient, PatientDTO.class);
+        return modelMapper.map(patient, PatientResponseDTO.class);
     }
     public PatientDTO storePatient(PatientDTO patientDTO){
         Patient Patient = modelMapper.map(patientDTO, Patient.class);
@@ -45,14 +46,14 @@ public class PatientService{
         // You can use main DTO now patch was only for update to skip @NotNull validations
         return modelMapper.map(storedPatient, PatientDTO.class);
     }
-    public List<PatientDTO> findByFirstOrLastName(String searchString){
+    public List<PatientResponseDTO> findByFirstOrLastName(String searchString){
 
         List<Patient> patientList = patientRepository.findByFirstOrLastName(searchString);
-        List<PatientDTO> patientDTOList = new ArrayList<>();
+        List<PatientResponseDTO> patientDTOList = new ArrayList<>();
 
         for (Patient patient : patientList) {
-            PatientDTO currentDTO = modelMapper.map(patient, PatientDTO.class);
-            patientDTOList.add(currentDTO);
+            PatientResponseDTO currentResponseDTO = modelMapper.map(patient, PatientResponseDTO.class);
+            patientDTOList.add(currentResponseDTO);
         }
         
         return patientDTOList;
