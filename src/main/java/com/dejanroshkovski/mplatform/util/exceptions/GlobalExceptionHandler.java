@@ -4,7 +4,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.lang.Nullable;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -31,21 +30,14 @@ public class GlobalExceptionHandler {
     public final ResponseEntity<ApiError> handleException(Exception ex, WebRequest request) {
         
         HttpHeaders headers = new HttpHeaders();
-
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 
-        List<String> list = Stream.of(ex.getMessage()).collect(Collectors.toList());
-        ApiError apiError = new ApiError(list);
-
-        return handleExceptionInternal(ex, apiError, headers, status, request);
-    }
-
-    // Handle the 404 exceptions
-    @ExceptionHandler({EntityNotFoundException.class, HttpMessageNotWritableException.class})
-    @Nullable
-    public final ResponseEntity<ApiError> handleException(EntityNotFoundException ex, WebRequest request) {
-        HttpHeaders headers = new HttpHeaders();
-        HttpStatus status = HttpStatus.NOT_FOUND;
+        if(ex.getClass() == HttpMessageNotReadableException.class || ex.getClass() == ValidationException.class){
+            status = HttpStatus.UNPROCESSABLE_ENTITY;
+        }
+        if(ex.getClass() == EntityNotFoundException.class){
+            status = HttpStatus.NOT_FOUND;
+        }
 
         List<String> list = Stream.of(ex.getMessage()).collect(Collectors.toList());
         ApiError apiError = new ApiError(list);
@@ -66,17 +58,6 @@ public class GlobalExceptionHandler {
             // .map(contentError -> contentError.getObjectName() + " " + contentError.getDefaultMessage())
             .map(contentError -> contentError.getDefaultMessage())
             .collect(Collectors.toList()));
-
-        return handleExceptionInternal(ex, apiError, headers, status, request);
-    }
-    @ExceptionHandler({HttpMessageNotReadableException.class, ValidationException.class})
-    @Nullable
-    public final ResponseEntity<ApiError> handleException(HttpMessageNotReadableException ex, WebRequest request) {
-        HttpHeaders headers = new HttpHeaders();
-        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
-
-        List<String> list = Stream.of(ex.getMessage()).collect(Collectors.toList());
-        ApiError apiError = new ApiError(list);
 
         return handleExceptionInternal(ex, apiError, headers, status, request);
     }
