@@ -1,8 +1,8 @@
 Welcome to Mplatform
 
-This project is a showcase for a java spring boot application.
+This project is a showcase for a java spring boot REST application.
 
-Live demo of the applicaiton can be found [here](http://mplatform.dejanroshkovski.com)
+Live demo of the applicaiton can be found [here](https://mplatform.dejanroshkovski.com:8443/)
 ================================================
 
 Currently the appplicaiton uses in memory authentication with basic auth.
