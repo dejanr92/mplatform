@@ -10,8 +10,29 @@
 	</parent>
 	<groupId>com.dejanroshkovski</groupId>
 	<artifactId>mplatform</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
+	<version>0.0.1</version>
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<env>dev</env>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>prod</id>
+			<properties>
+			<!-- building on local tests will fail -->
+				<maven.test.skip>true</maven.test.skip>
+				<env>prod</env>
+			</properties>
+		</profile>
+	</profiles>
+	<name>mplatform</name>
+	<packaging>war</packaging>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>

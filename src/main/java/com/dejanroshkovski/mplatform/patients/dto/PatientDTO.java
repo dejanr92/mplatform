@@ -24,7 +24,7 @@ public class PatientDTO{
     @Pattern(regexp="\\d{8}", message="Must be 8 digit code")
     private String healthInsuranceId;
 
-    @NotNull(message="Must provide examination Date")
+    @NotNull(message="Must provide dateOfBirth")
     @ValidDateValidation(value="yyyy-MM-dd", message="Date of birth must be formatted yyyy-MM-dd")
     // Date has to be in yyyy-MM-dd format
     private String dateOfBirth;

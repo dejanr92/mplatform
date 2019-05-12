@@ -27,7 +27,7 @@ public class ExaminationDTO{
     @NotNull(message="Must provide patient id")
     private Integer patientId;
 
-    @NotNull(message="Must provide examination Date")
+    @NotNull(message="Must provide examinationDate")
     @ValidDateValidation(value="yyyy-MM-dd", message="Must be formatted yyyy-MM-dd")
     // Date has to be in yyyy-MM-dd format
     private String examinationDate;
