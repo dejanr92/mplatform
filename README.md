@@ -4,7 +4,7 @@ This project is a showcase for a java spring boot REST application.
 
 ### Live demo of the applicaiton can be found [here](https://mplatform.dejanroshkovski.com:8443/)
 
-Currently the appplicaiton uses in memory authentication with basic auth.
+Currently the application uses in memory authentication with basic auth.
 
 An example user for testing the API would be 
 username: admin
